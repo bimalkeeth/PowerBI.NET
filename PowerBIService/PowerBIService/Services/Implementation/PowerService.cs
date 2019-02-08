@@ -91,7 +91,7 @@ namespace PowerBIService.Services.Implementation
             {
                 var ddx = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
                 var group = await pClient.Groups.CreateGroupWithHttpMessagesAsync(
-                    new GroupCreationRequest {Name = groupCreateRequest.GroupName}, true);
+                    new GroupCreationRequest {Name = groupCreateRequest.GroupName});
 
                 if (groupCreateRequest.Members.Any())
                 {
