@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerBIService", "PowerBISe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceClient", "ServiceClient\ServiceClient.csproj", "{A8655A97-695F-4851-AFDC-4A5B367D1EE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{A4AEB4EF-CCE9-4459-BE39-10ECEEB6ACC5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCommon", "ServiceCommon\ServiceCommon.csproj", "{8DB105C9-DE23-4D77-B22B-F94848A45BDB}"
 EndProject
 Global
@@ -22,10 +20,6 @@ Global
 		{A8655A97-695F-4851-AFDC-4A5B367D1EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8655A97-695F-4851-AFDC-4A5B367D1EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8655A97-695F-4851-AFDC-4A5B367D1EE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4AEB4EF-CCE9-4459-BE39-10ECEEB6ACC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4AEB4EF-CCE9-4459-BE39-10ECEEB6ACC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4AEB4EF-CCE9-4459-BE39-10ECEEB6ACC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4AEB4EF-CCE9-4459-BE39-10ECEEB6ACC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DB105C9-DE23-4D77-B22B-F94848A45BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DB105C9-DE23-4D77-B22B-F94848A45BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB105C9-DE23-4D77-B22B-F94848A45BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
