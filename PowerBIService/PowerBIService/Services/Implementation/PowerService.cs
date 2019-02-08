@@ -15,16 +15,10 @@ namespace PowerBIService.Services.Implementation
 {
     public class PowerService:PowerServiceBase,IPowerService
     {
-        private EmbedConfig         MEmbedConfig;
-        private TileEmbedConfig     MTileEmbedConfig;
-        private TokenCredentials    MTokenCredentials;
-
-
+       
         public PowerService()
         {
-            MTokenCredentials = null;
-            MEmbedConfig = new EmbedConfig();
-            MTileEmbedConfig = new TileEmbedConfig();
+            
         }
 
         public async Task<CloneReportResponse[]> CloneReports(CloneReportRequest cloneReportRequest)

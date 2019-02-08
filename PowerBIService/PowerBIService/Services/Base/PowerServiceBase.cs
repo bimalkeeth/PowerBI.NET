@@ -13,54 +13,31 @@ namespace PowerBIService.Services.Base
     {
         #region Base Variables
         protected UserData UserData { get; set; }
-        private AuthenticationResult TokenResult { get; set; }
+        protected AuthenticationResult TokenResult { get; set; }
         protected TokenCredentials PTokenCredentials { get; set;}
         
+        protected  EmbedConfig EmbedConfiguration { get; set; }=new EmbedConfig();
         
         
         protected static string POWER_BI_API_URL = "https://api.powerbi.com";
 
-        private static string POWER_BI_AUTHORITY_URL ="https://login.microsoftonline.com/common/oauth2/authorize/";//"https://login.microsoftonline.com/"; //"https://login.windows.net/common/oauth2/authorize/";
+        private static string POWER_BI_AUTHORITY_URL ="https://login.microsoftonline.com/common/oauth2/authorize/"; //"https://login.microsoftonline.com/"; //"https://login.windows.net/common/oauth2/authorize/";
         private static string POWER_BI_AUTHORITY_TOKEN_URL = "https://login.windows.net/470cec91-5a0e-47c7-87a9-2fcaf82d5d90/oauth2/token";
         private static string POWER_BI_RESOURCE_URL = "https://analysis.windows.net/powerbi/api";
        
         #endregion
         #region Authontication
+        
+        
         protected  async Task<bool> AuthenticateAsync()
         {
-            TokenCache TC = new TokenCache();
-            var clientCredential = new ClientCredential(UserData.ApplicationId, UserData.SecretId);
-            AuthenticationContext ctx = null;
-            
-            if (!string.IsNullOrEmpty(UserData.TenantId))
-            {
-                ctx=new AuthenticationContext(POWER_BI_AUTHORITY_URL+UserData.TenantId,false,TC);
-            }
-            else
-            {
-                ctx=new AuthenticationContext(POWER_BI_AUTHORITY_URL+"/common");
-                if (ctx.TokenCache.Count > 0)
-                {
-                    var cacheToken = ctx.TokenCache.ReadItems().First().TenantId;
-                    ctx = new AuthenticationContext(POWER_BI_AUTHORITY_URL+cacheToken ,false,TC);
-                }
-            }
-            try
-            {
-                TokenResult = await ctx.AcquireTokenAsync(POWER_BI_RESOURCE_URL,clientCredential);
-                PTokenCredentials=new TokenCredentials(TokenResult.AccessToken,TokenResult.AccessTokenType);
-                
-                
-               return true;
-            }
-            catch (AdalSilentTokenAcquisitionException silentExp)
-            {
-                throw silentExp;
-            }
-            catch (Exception genExp)
-            {
-                throw genExp;
-            }
+            var TC = new TokenCache();
+            var credential = new UserPasswordCredential(UserData.UserName, UserData.Password);
+            var authenticationContext = new AuthenticationContext(POWER_BI_AUTHORITY_URL,false, TC);
+           
+            TokenResult = await authenticationContext.AcquireTokenAsync("https://analysis.windows.net/powerbi/api", "66bec1b2-4684-4a08-9f2b-b67216d4695a", credential);
+            PTokenCredentials=new TokenCredentials(TokenResult.AccessToken,"Bearer");
+            return true;
         }
         #endregion
         

@@ -27,7 +27,9 @@ namespace ServiceClient
                 {
                     TenantId = "470cec91-5a0e-47c7-87a9-2fcaf82d5d90",
                     SecretId =  "5gKtFOHQjj-!YUj]ptH",
-                    ApplicationId ="99cd8922-fafb-4cd1-ac7d-16bfdf5a2cf8"  //""75c13de1-9664-4445-84d8-73db0afc371f"
+                    ApplicationId ="66bec1b2-4684-4a08-9f2b-b67216d4695a",
+                    Password = "Scala@1234",
+                    UserName = "bkaluarachchi@assetic.com"
                 }
                
             })).ConfigureAwait(false);
