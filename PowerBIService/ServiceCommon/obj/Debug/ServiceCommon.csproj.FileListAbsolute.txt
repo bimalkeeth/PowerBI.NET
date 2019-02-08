@@ -1,0 +1,8 @@
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\bin\Debug\ServiceCommon.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\bin\Debug\ServiceCommon.pdb
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.csprojAssemblyReference.cache
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.Resources.PowerResource.resources
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.csproj.GenerateResource.cache
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.csproj.CoreCompileInputs.cache
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\ServiceCommon\obj\Debug\ServiceCommon.pdb
