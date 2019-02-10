@@ -101,6 +101,9 @@ namespace PowerBIService.Services.Implementation
                                    {
                                        await SetReportParameters(pClient, cloneReportRequest.ClientWorkSpace, reportDatasetId, reportParameters.Value,parameter );
                                    }
+
+                                   var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(@group.Id, reportDatasetId);
+                                   await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,import.Id, new RebindReportRequest{DatasetId= reportDatasetId});
                                }
                                catch (Exception e){throw e;}
                            }
