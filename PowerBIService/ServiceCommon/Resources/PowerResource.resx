@@ -37,7 +37,7 @@
         <value>No parent workspace defined in the request.</value>
     </data>
     <data name="ValidationError_ClientWorkSpaceMissingForClone">
-        <value>No parent workspace defined in the request.</value>
+        <value>No client workspace defined in the request.</value>
     </data>
     <data name="ValidationError_AuthenticationError">
         <value>Authentication is in error.</value>
@@ -50,5 +50,17 @@
     </data>
     <data name="EmbedReportNotFoundError">
         <value>No reports were found in the workspace.</value>
+    </data>
+    <data name="EmbedReportUrlIsMissingError">
+        <value>No WebApi Url defined for report.</value>
+    </data>
+    <data name="ValidationError_EmbedWorkSpaceMissingForClone">
+        <value>No workspace defined in the request.</value>
+    </data>
+    <data name="ValidationError_EmbedReportsMissingError">
+        <value>No report defined for embedding.</value>
+    </data>
+    <data name="ValidationErrorCredentialMissingError">
+        <value>Credential not  defined for embedding.</value>
     </data>
 </root>

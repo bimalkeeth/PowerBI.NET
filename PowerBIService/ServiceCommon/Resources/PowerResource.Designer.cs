@@ -70,6 +70,15 @@ namespace ServiceCommon.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No WebApi Url defined for report..
+        /// </summary>
+        public static string EmbedReportUrlIsMissingError {
+            get {
+                return ResourceManager.GetString("EmbedReportUrlIsMissingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Id in User request is missing or not defined..
         /// </summary>
         public static string ValidationError_ApplicationIdMissing {
@@ -88,11 +97,29 @@ namespace ServiceCommon.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No parent workspace defined in the request..
+        ///   Looks up a localized string similar to No client workspace defined in the request..
         /// </summary>
         public static string ValidationError_ClientWorkSpaceMissingForClone {
             get {
                 return ResourceManager.GetString("ValidationError_ClientWorkSpaceMissingForClone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No report defined for embedding..
+        /// </summary>
+        public static string ValidationError_EmbedReportsMissingError {
+            get {
+                return ResourceManager.GetString("ValidationError_EmbedReportsMissingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No workspace defined in the request..
+        /// </summary>
+        public static string ValidationError_EmbedWorkSpaceMissingForClone {
+            get {
+                return ResourceManager.GetString("ValidationError_EmbedWorkSpaceMissingForClone", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace ServiceCommon.Resources {
         public static string ValidationErrorClientGroupNotFoundError {
             get {
                 return ResourceManager.GetString("ValidationErrorClientGroupNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credential not  defined for embedding..
+        /// </summary>
+        public static string ValidationErrorCredentialMissingError {
+            get {
+                return ResourceManager.GetString("ValidationErrorCredentialMissingError", resourceCulture);
             }
         }
         

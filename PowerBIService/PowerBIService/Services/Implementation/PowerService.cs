@@ -123,10 +123,68 @@ namespace PowerBIService.Services.Implementation
             }
             return responseList.ToArray();
         }
-        public async Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest)
+
+        private async Task<bool> UpdateAndRefreshDataSet(PowerBIClient pClient,EmbedReportRequest embedReportRequest, string groupId,string reportId,string dataSetId)
+        {
+            
+            var dataset= await pClient.Datasets.GetDatasetByIdInGroupWithHttpMessagesAsync(groupId, dataSetId);
+            var data= await pClient.Datasets.GetParametersInGroupWithHttpMessagesAsync(groupId,  dataSetId);
+
+
+            var ParamList = new List<UpdateDatasetParameterDetails>();
+            ParamList.Add(new UpdateDatasetParameterDetails
+            {
+                Name = "ConnectionUrl",
+                NewValue = embedReportRequest.EmbedReportUrl
+            });
+            
+            var response= await pClient.Datasets.UpdateParametersInGroupWithHttpMessagesAsync(groupId, dataSetId,new UpdateDatasetParametersRequest{UpdateDetails =ParamList});
+            
+            await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
+            await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(groupId, dataSetId);
+           
+            return true;
+        }
+        /// <summary>
+        /// Embeding Report to User request
+        /// </summary>
+        /// <param name="embedReportRequest"></param>
+        /// <returns></returns>
+        public async Task<EmbedConfig> ClientEmbedReport(EmbedReportRequest embedReportRequest)
+        {
+            if (string.IsNullOrWhiteSpace(embedReportRequest.EmbedReportUrl))
+            {
+                throw new ValidationException(PowerResource.EmbedReportUrlIsMissingError);
+            }
+
+            if (string.IsNullOrWhiteSpace(embedReportRequest.WorkSpaceName))
+            {
+                throw new ValidationException(PowerResource.ValidationError_EmbedWorkSpaceMissingForClone);
+            }
+            
+            if (string.IsNullOrWhiteSpace(embedReportRequest.ReportName))
+            {
+                throw new ValidationException(PowerResource.ValidationError_EmbedReportsMissingError);
+            }
+            
+            if (embedReportRequest.Credential==null)
+            {
+                throw new ValidationException(PowerResource.ValidationErrorCredentialMissingError);
+            }
+            
+           return await EmbedReport(embedReportRequest);
+        }
+        
+        /// <summary>
+        /// Embeding Report with Changing parameters
+        /// </summary>
+        /// <param name="embedReportRequest"></param>
+        /// <returns></returns>
+        /// <exception cref="ValidationException"></exception>
+        private async Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest)
         {
             var config = new EmbedConfig();
-            base.UserData = embedReportRequest.Credential;
+            UserData = embedReportRequest.Credential;
             try
             {
                 var data =  await AuthenticateAsync();
@@ -152,8 +210,41 @@ namespace PowerBIService.Services.Implementation
                         config.ErrorMessage = PowerResource.EmbedReportNotFoundError;
                     }
 
+                    var dataSet=await pClient.Datasets.GetDatasetByIdInGroupAsync(group.Id, embeddingReport.Id);
+                    config.IsEffectiveIdentityRequired = dataSet.IsEffectiveIdentityRequired;
+                    config.IsEffectiveIdentityRolesRequired = dataSet.IsEffectiveIdentityRolesRequired;
 
-
+                   var upDateResponse= await UpdateAndRefreshDataSet(pClient,embedReportRequest, group.Id, embeddingReport.Id, dataSet.Id);
+                   if (upDateResponse)
+                   {
+                       GenerateTokenRequest generateTokenRequestParameters;
+                       if (!string.IsNullOrWhiteSpace(embedReportRequest.EmbedUserName))
+                       {
+                           var rls = new EffectiveIdentity(embedReportRequest.EmbedUserName, new List<string> { embeddingReport.DatasetId });
+                           if (!string.IsNullOrWhiteSpace(embedReportRequest.EmbedRoles))
+                           {
+                               var rolesList = new List<string>();
+                               rolesList.AddRange(embedReportRequest.EmbedRoles.Split(','));
+                               rls.Roles = rolesList;
+                           }
+                           generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view", identities: new List<EffectiveIdentity> { rls });
+                       }
+                       else
+                       {
+                           generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
+                       }
+                       var tokenResponse = await pClient.Reports.GenerateTokenInGroupAsync(group.Id, embeddingReport.Id, generateTokenRequestParameters);
+                       if (tokenResponse == null)
+                       {
+                           config.ErrorMessage = "Failed to generate embed token.";
+                           return config;
+                       }
+                       
+                       config.EmbedToken = tokenResponse;
+                       config.EmbedUrl = embeddingReport.EmbedUrl;
+                       config.Id = embeddingReport.Id;
+                       return config;
+                   }
                 }
             }
             catch (Exception e)
@@ -161,7 +252,6 @@ namespace PowerBIService.Services.Implementation
                 Console.WriteLine(e);
                 throw;
             }
-
             return null;
         }
 
@@ -190,10 +280,5 @@ namespace PowerBIService.Services.Implementation
             }
             return false;
         }
-        public async Task<bool> CloneReport()
-        {
-            return false;
-        }
-       
     }
 }
