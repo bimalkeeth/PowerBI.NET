@@ -48,4 +48,7 @@
     <data name="ValidationErrorClientGroupNotFoundError">
         <value>Client group can not be found.</value>
     </data>
+    <data name="EmbedReportNotFoundError">
+        <value>No reports were found in the workspace.</value>
+    </data>
 </root>

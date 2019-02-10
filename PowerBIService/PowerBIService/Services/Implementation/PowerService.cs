@@ -125,12 +125,34 @@ namespace PowerBIService.Services.Implementation
         }
         public async Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest)
         {
+            var config = new EmbedConfig();
             base.UserData = embedReportRequest.Credential;
             try
             {
                 var data =  await AuthenticateAsync();
                 using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
                 {
+
+                    var groups = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
+                    var group = groups.Body.Value.FirstOrDefault(s => s.Name == embedReportRequest.WorkSpaceName);
+                    if (group == null)
+                    {
+                        throw new ValidationException(PowerResource.ValidationErrorParentGroupNotFoundError);
+                    }
+                    var reports = await pClient.Reports.GetReportsInGroupAsync(group.Id);
+                    if (!reports.Value.Any())
+                    {
+                        config.ErrorMessage = PowerResource.EmbedReportNotFoundError;
+                        return config;
+                    }
+
+                    var embeddingReport=reports.Value.FirstOrDefault(s => s.Name == embedReportRequest.ReportName);
+                    if (embeddingReport != null)
+                    {
+                        config.ErrorMessage = PowerResource.EmbedReportNotFoundError;
+                    }
+
+
 
                 }
             }

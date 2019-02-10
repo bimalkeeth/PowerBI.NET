@@ -61,6 +61,15 @@ namespace ServiceCommon.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No reports were found in the workspace..
+        /// </summary>
+        public static string EmbedReportNotFoundError {
+            get {
+                return ResourceManager.GetString("EmbedReportNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Id in User request is missing or not defined..
         /// </summary>
         public static string ValidationError_ApplicationIdMissing {
