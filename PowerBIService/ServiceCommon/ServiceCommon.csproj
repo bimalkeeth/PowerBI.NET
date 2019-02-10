@@ -55,6 +55,7 @@
     <Compile Include="Contract\CloneReport.cs" />
     <Compile Include="Contract\CloneReportRequest.cs" />
     <Compile Include="Contract\CloneReportResponse.cs" />
+    <Compile Include="Contract\EmbedReportRequest.cs" />
     <Compile Include="Contract\GroupCreateRequest.cs" />
     <Compile Include="Contract\MembersRights.cs" />
     <Compile Include="Contract\UserData.cs" />

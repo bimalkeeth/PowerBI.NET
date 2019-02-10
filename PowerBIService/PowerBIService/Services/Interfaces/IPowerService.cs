@@ -9,9 +9,9 @@ namespace PowerBIService.Services.Interfaces
         /// <summary>
         /// Embed Report
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="embedReportRequest"></param>
         /// <returns></returns>
-        EmbedConfig EmbedReport(UserData userData);
+        Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest);
         
         /// <summary>
         /// Create Group

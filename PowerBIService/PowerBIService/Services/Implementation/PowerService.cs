@@ -62,6 +62,7 @@ namespace PowerBIService.Services.Implementation
         }
         private async Task<CloneReportResponse[]> Clone(CloneReportRequest cloneReportRequest)
         {
+            var responseList = new List<CloneReportResponse>();
             try
             {
                 await AuthenticateAsync();
@@ -101,9 +102,14 @@ namespace PowerBIService.Services.Implementation
                                    {
                                        await SetReportParameters(pClient, cloneReportRequest.ClientWorkSpace, reportDatasetId, reportParameters.Value,parameter );
                                    }
-
+                                   var erbindResult=await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,import.Id, new RebindReportRequest{DatasetId= reportDatasetId});
                                    var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(@group.Id, reportDatasetId);
-                                   await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,import.Id, new RebindReportRequest{DatasetId= reportDatasetId});
+                                   responseList.Add(new CloneReportResponse
+                                   {
+                                       CloneReportName = cloneReport.CloneReportName,
+                                       ParentReportName = cloneReport.ParentReportName,
+                                       Success = true
+                                   });
                                }
                                catch (Exception e){throw e;}
                            }
@@ -115,16 +121,28 @@ namespace PowerBIService.Services.Implementation
             {
                throw new ServerException(exp.Message);
             }
-
-            return new CloneReportResponse[] { };
+            return responseList.ToArray();
         }
-        public EmbedConfig EmbedReport(UserData userData)
+        public async Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest)
         {
-            base.UserData = userData;
-            var data = Task.Run(async () => await AuthenticateAsync()).ConfigureAwait(false);
-            data.GetAwaiter().GetResult();
+            base.UserData = embedReportRequest.Credential;
+            try
+            {
+                var data =  await AuthenticateAsync();
+                using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
             return null;
         }
+
         public async Task<bool> CreateGroup(GroupCreateRequest groupCreateRequest)
         {
             base.UserData = groupCreateRequest.Credential;
