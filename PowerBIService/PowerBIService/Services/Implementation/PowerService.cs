@@ -150,7 +150,10 @@ namespace PowerBIService.Services.Implementation
             }
             return false;
         }
-
+        public async Task<bool> CloneReport()
+        {
+            return false;
+        }
        
     }
 }
