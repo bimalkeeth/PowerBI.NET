@@ -131,5 +131,23 @@ namespace ServiceCommon.Resources {
                 return ResourceManager.GetString("ValidationError_TenantIdMissing", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client group can not be found..
+        /// </summary>
+        public static string ValidationErrorClientGroupNotFoundError {
+            get {
+                return ResourceManager.GetString("ValidationErrorClientGroupNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent group can not be found..
+        /// </summary>
+        public static string ValidationErrorParentGroupNotFoundError {
+            get {
+                return ResourceManager.GetString("ValidationErrorParentGroupNotFoundError", resourceCulture);
+            }
+        }
     }
 }

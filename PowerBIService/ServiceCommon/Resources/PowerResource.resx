@@ -42,4 +42,10 @@
     <data name="ValidationError_AuthenticationError">
         <value>Authentication is in error.</value>
     </data>
+    <data name="ValidationErrorParentGroupNotFoundError">
+        <value>Parent group can not be found.</value>
+    </data>
+    <data name="ValidationErrorClientGroupNotFoundError">
+        <value>Client group can not be found.</value>
+    </data>
 </root>

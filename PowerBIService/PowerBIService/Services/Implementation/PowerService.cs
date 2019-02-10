@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Threading.Tasks;
 using Microsoft.PowerBI.Api.V2;
 using Microsoft.PowerBI.Api.V2.Models;
@@ -15,12 +17,10 @@ namespace PowerBIService.Services.Implementation
 {
     public class PowerService:PowerServiceBase,IPowerService
     {
-       
         public PowerService()
         {
             
         }
-
         public async Task<CloneReportResponse[]> CloneReports(CloneReportRequest cloneReportRequest)
         {
             if (string.IsNullOrWhiteSpace(cloneReportRequest.Credential.TenantId))
@@ -62,12 +62,57 @@ namespace PowerBIService.Services.Implementation
         }
         private async Task<CloneReportResponse[]> Clone(CloneReportRequest cloneReportRequest)
         {
-
-            using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
+            try
             {
+                await AuthenticateAsync();
+                using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
+                {
 
+                    var groups = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
+                    var group = groups.Body.Value.FirstOrDefault(s => s.Name == cloneReportRequest.ParentWorkSpace);
+                    if (group == null)
+                    {
+                        throw new ValidationException(PowerResource.ValidationErrorParentGroupNotFoundError);
+                    }
 
+                    var clientGroup = groups.Body.Value.FirstOrDefault(s => s.Name == cloneReportRequest.ClientWorkSpace);
+                    if (clientGroup == null)
+                    {
+                        throw new ValidationException(PowerResource.ValidationErrorClientGroupNotFoundError);
+                    }
+
+                    var reports = await pClient.Reports.GetReportsInGroupAsync(group.Id);
+                    if (reports.Value.Any())
+                    {
+                        foreach (var cloneReport in cloneReportRequest.CloneReports)
+                        {
+                           var parentReport= reports.Value.FirstOrDefault(s => s.Name == cloneReport.ParentReportName);
+                           if (parentReport != null)
+                           {
+                               var export= await pClient.Reports.ExportReportInGroupAsync(@group.Id, parentReport.Id);
+                               var import = await TryUploadAsync(pClient, clientGroup.Id, export, cloneReport.CloneReportName);
+                               var reportDatasetId = import.Datasets.First().Id;
+                               try
+                               {
+                                   var parameter = new Dictionary<string, string> {{"ConnectionUrl", cloneReport.WebApiEndPoint}};
+
+                                   var reportParameters = await pClient.Datasets.GetParametersInGroupAsync(clientGroup.Id, reportDatasetId);
+                                   if (reportParameters!=null && reportParameters.Value.Any())
+                                   {
+                                       await SetReportParameters(pClient, cloneReportRequest.ClientWorkSpace, reportDatasetId, reportParameters.Value,parameter );
+                                   }
+                               }
+                               catch (Exception e){throw e;}
+                           }
+                        }
+                    }
+                }
             }
+            catch (Exception exp)
+            {
+               throw new ServerException(exp.Message);
+            }
+
             return new CloneReportResponse[] { };
         }
         public EmbedConfig EmbedReport(UserData userData)
@@ -83,7 +128,6 @@ namespace PowerBIService.Services.Implementation
             await AuthenticateAsync();
             using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
             {
-                var ddx = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
                 var group = await pClient.Groups.CreateGroupWithHttpMessagesAsync(
                     new GroupCreationRequest {Name = groupCreateRequest.GroupName});
 
@@ -98,11 +142,9 @@ namespace PowerBIService.Services.Implementation
                                     EmailAddress = s.MemberEmail, GroupUserAccessRightProperty = s.GroupUserAccessRight
                                 });
                         }
-                        ;
                     }
                 }
             }
-
             return false;
         }
 
