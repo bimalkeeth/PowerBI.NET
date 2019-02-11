@@ -19,7 +19,7 @@ namespace PowerBIService.Services.Base
     public abstract class PowerServiceBase
     {
         #region Base Variables
-        protected UserData UserData { get; set; }
+        protected UserData UserCredential { get; set; }
         protected AuthenticationResult TokenResult { get; set; }
         protected TokenCredentials PTokenCredentials { get; set;}
         protected  EmbedConfig EmbedConfiguration { get; set; }=new EmbedConfig();
@@ -34,9 +34,9 @@ namespace PowerBIService.Services.Base
         protected  async Task<bool> AuthenticateAsync()
         {
             var tc = new TokenCache();
-            var credential = new UserPasswordCredential(UserData.UserName, UserData.Password);
+            var credential = new UserPasswordCredential(UserCredential.UserName, UserCredential.Password);
             var authenticationContext = new AuthenticationContext(POWER_BI_AUTHORITY_URL,false, tc);
-            TokenResult = await authenticationContext.AcquireTokenAsync(POWER_BI_RESOURCE_URL, UserData.ApplicationId, credential);
+            TokenResult = await authenticationContext.AcquireTokenAsync(POWER_BI_RESOURCE_URL, UserCredential.ApplicationId, credential);
             PTokenCredentials=new TokenCredentials(TokenResult.AccessToken,"Bearer");
             return true;
         }
@@ -151,5 +151,8 @@ namespace PowerBIService.Services.Base
                 }
             }
         }
+
+
+       
     }
 }

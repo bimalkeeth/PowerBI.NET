@@ -57,8 +57,10 @@
     <Compile Include="Contract\CloneReportResponse.cs" />
     <Compile Include="Contract\EmbededReportDataSetParam.cs" />
     <Compile Include="Contract\EmbedReportRequest.cs" />
+    <Compile Include="Contract\GetReportRequest.cs" />
     <Compile Include="Contract\GroupCreateRequest.cs" />
     <Compile Include="Contract\MembersRights.cs" />
+    <Compile Include="Contract\NameValueContract.cs" />
     <Compile Include="Contract\UserData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\PowerResource.Designer.cs" />

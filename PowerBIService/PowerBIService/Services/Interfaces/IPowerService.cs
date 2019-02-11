@@ -26,6 +26,20 @@ namespace PowerBIService.Services.Interfaces
         /// <param name="cloneReportRequest"></param>
         /// <returns></returns>
         Task<CloneReportResponse[]> CloneReports(CloneReportRequest cloneReportRequest);
+
+        /// <summary>
+        /// Get All Groups
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <returns></returns>
+        Task<NameValueContract[]> GetAllGroups(UserData credential);
+
+        /// <summary>
+        /// Get Reports for the workspace
+        /// </summary>
+        /// <param name="getReportRequest"></param>
+        /// <returns></returns>
+        Task<NameValueContract[]> GetAllReportInWorkSpace(GetReportRequest getReportRequest);
     }
 
    
