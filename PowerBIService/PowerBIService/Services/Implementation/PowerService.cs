@@ -101,14 +101,26 @@ namespace PowerBIService.Services.Implementation
                                    {
                                        await SetReportParameters(pClient, clientGroup.Id, reportDatasetId, reportParameters.Value,parameter );
                                    }
-                                   var erbindResult=await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,import.Id, new RebindReportRequest{DatasetId= reportDatasetId});
-                                   var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(@group.Id, reportDatasetId);
-                                   responseList.Add(new CloneReportResponse
+                                   var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, reportDatasetId);
+
+                                   var clientGroupReports= await pClient.Reports.GetReportsInGroupAsync(clientGroup.Id);
+
+                                   if (clientGroupReports.Value.Any())
                                    {
-                                       CloneReportName = cloneReport.CloneReportName,
-                                       ParentReportName = cloneReport.ParentReportName,
-                                       Success = true
-                                   });
+                                     var cloneResultReport= clientGroupReports.Value.FirstOrDefault(s =>s.Name == cloneReport.CloneReportName);
+                                     if (cloneResultReport != null)
+                                     {
+                                         var generateReportId = cloneResultReport.Id;
+                                         var erbindResult=await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,generateReportId, new RebindReportRequest{DatasetId= cloneResultReport.DatasetId});
+                                         responseList.Add(new CloneReportResponse
+                                         {
+                                             CloneReportName = cloneReport.CloneReportName,
+                                             ParentReportName = cloneReport.ParentReportName,
+                                             Success = true
+                                         });
+                                     }
+                                   }
+
                                }
                                catch (Exception e){throw e;}
                            }
@@ -138,9 +150,10 @@ namespace PowerBIService.Services.Implementation
             });
             
             var response= await pClient.Datasets.UpdateParametersInGroupWithHttpMessagesAsync(groupId, dataSetId,new UpdateDatasetParametersRequest{UpdateDetails =ParamList});
-            
-            await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
+
             await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(groupId, dataSetId);
+            await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
+
            
             return true;
         }

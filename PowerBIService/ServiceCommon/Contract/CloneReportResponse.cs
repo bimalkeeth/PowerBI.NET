@@ -5,5 +5,7 @@ namespace ServiceCommon.Contract
         public string ParentReportName { get; set; }
         public string CloneReportName { get; set; }
         public bool Success { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
