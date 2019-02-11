@@ -51,8 +51,8 @@ namespace WebClientDemo.Controllers
         public async Task<IEnumerable<CloneReportResponseVM>> CloneReport(CloneReportRequestVM cloneReport)
         {
 
-            var d = new EmbedService();
-           var res=  await d.CloneReport("", "");
+           //var d = new EmbedService();
+           //var res=  await d.CloneReport("", "");
 
             var cloneReportRequest = new CloneReportRequest
             {
