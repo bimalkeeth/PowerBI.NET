@@ -87,8 +87,8 @@ namespace PowerBIService.Services.Implementation
                         foreach (var cloneReport in cloneReportRequest.CloneReports)
                         {
                            var parentReport= reports.Value.FirstOrDefault(s => s.Name == cloneReport.ParentReportName);
-                           if (parentReport != null)
-                           {
+                           if (parentReport == null) continue;
+
                                var export= await pClient.Reports.ExportReportInGroupAsync(@group.Id, parentReport.Id);
                                var import = await TryUploadAsync(pClient, clientGroup.Id, export, cloneReport.CloneReportName);
                                var reportDatasetId = import.Datasets.First().Id;
@@ -101,29 +101,24 @@ namespace PowerBIService.Services.Implementation
                                    {
                                        await SetReportParameters(pClient, clientGroup.Id, reportDatasetId, reportParameters.Value,parameter );
                                    }
-                                   var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, reportDatasetId);
-
-                                   var clientGroupReports= await pClient.Reports.GetReportsInGroupAsync(clientGroup.Id);
-
-                                   if (clientGroupReports.Value.Any())
+                                   foreach (var impDataset in import.Datasets)
                                    {
-                                     var cloneResultReport= clientGroupReports.Value.FirstOrDefault(s =>s.Name == cloneReport.CloneReportName);
-                                     if (cloneResultReport != null)
-                                     {
-                                         var generateReportId = cloneResultReport.Id;
-                                         var erbindResult=await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,generateReportId, new RebindReportRequest{DatasetId= cloneResultReport.DatasetId});
-                                         responseList.Add(new CloneReportResponse
-                                         {
-                                             CloneReportName = cloneReport.CloneReportName,
-                                             ParentReportName = cloneReport.ParentReportName,
-                                             Success = true
-                                         });
-                                     }
+                                       var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, impDataset.Id);
                                    }
-
+                                   var clientGroupReports= await pClient.Reports.GetReportsInGroupAsync(clientGroup.Id);
+                                   foreach (var impReport in import.Reports)
+                                   {
+                                       var cloneResultReport= clientGroupReports.Value.FirstOrDefault(s =>s.Id == impReport.Id);
+                                       await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(clientGroup.Id,impReport.Id, new RebindReportRequest{DatasetId= cloneResultReport.DatasetId});
+                                   }
+                                   responseList.Add(new CloneReportResponse
+                                   {
+                                       CloneReportName = cloneReport.CloneReportName,
+                                       ParentReportName = cloneReport.ParentReportName,
+                                       Success = true
+                                   });
                                }
                                catch (Exception e){throw e;}
-                           }
                         }
                     }
                 }
