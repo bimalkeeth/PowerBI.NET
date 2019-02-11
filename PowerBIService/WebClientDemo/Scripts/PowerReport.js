@@ -66,6 +66,32 @@ $(function (PowerReport, $) {
                 ;
         });
     };
-    
+
+    PowerReport.LoadEmbedReportForWorkSpace=function(item){
+        var url=PowerReport.stringFormat(Url.GetGroupReportsUrl,item);
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            async: true,
+            dataType: "json",
+            contentType: "application/json"
+
+        })
+            .done(function (data) {
+                $("#fromReportsEmbed").empty();
+                $.each(data, function(key, value) {
+                    $("#fromReportsEmbed").append("<option value="+value.Id+">" + value.Name + "</option>");
+                });
+            });
+    };
+
+
+
+
+    PowerReport.EmbedReport=function(){
+
+
+    }
     
 }(window.PowerReport = window.PowerReport || {}, jQuery));
