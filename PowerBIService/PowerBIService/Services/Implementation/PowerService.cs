@@ -65,7 +65,6 @@ namespace PowerBIService.Services.Implementation
             var responseList = new List<CloneReportResponse>();
             try
             {
-                await AuthenticateAsync();
                 using (var pClient = new PowerBIClient(new Uri(POWER_BI_API_URL), PTokenCredentials))
                 {
 

@@ -27,6 +27,7 @@ namespace PowerBIService.Services.Base
         
         protected static string POWER_BI_API_URL = "https://api.powerbi.com";
         private static string POWER_BI_AUTHORITY_URL ="https://login.microsoftonline.com/common/oauth2/authorize/";
+        private static string POWER_BI_AUTHORITY_API_URL ="https://login.windows.net/common/oauth2/authorize/";
         private static string POWER_BI_RESOURCE_URL = "https://analysis.windows.net/powerbi/api";
        
         #endregion
@@ -40,6 +41,16 @@ namespace PowerBIService.Services.Base
             PTokenCredentials=new TokenCredentials(TokenResult.AccessToken,"Bearer");
             return true;
         }
+        
+        private async Task<string> GetPowerBiAccessToken()
+        {
+            var powerBiAccountCredentials = new UserPasswordCredential(UserCredential.UserName, UserCredential.Password);
+            var authenticationContext = new AuthenticationContext(POWER_BI_AUTHORITY_API_URL);
+            var authenticationResult = await authenticationContext.AcquireTokenAsync(POWER_BI_RESOURCE_URL, UserCredential.ApplicationId, powerBiAccountCredentials);
+            return authenticationResult.AccessToken;
+        }
+        
+        
         #endregion
 
         /// <summary>
@@ -59,7 +70,7 @@ namespace PowerBIService.Services.Base
                 Timeout = TimeSpan.FromMilliseconds(900000)
             };
             client.DefaultRequestHeaders.Add("Accept", "application/json; charset=utf-8");
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + (TokenResult.AccessToken));
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + await GetPowerBiAccessToken());
             if (content != null)
             {
                 request.Content = content;
