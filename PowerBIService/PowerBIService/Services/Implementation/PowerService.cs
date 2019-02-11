@@ -145,17 +145,14 @@ namespace PowerBIService.Services.Implementation
             });
             
             var response= await pClient.Datasets.UpdateParametersInGroupWithHttpMessagesAsync(groupId, dataSetId,new UpdateDatasetParametersRequest{UpdateDetails =ParamList});
-
             await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(groupId, dataSetId);
             await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
-
-           
             return true;
         }
         /// <summary>
         /// Embeding Report to User request
         /// </summary>
-        /// <param name="embedReportRequest"></param>
+        /// <param name="embedReportRequestt"></param>
         /// <returns></returns>
         public async Task<EmbedConfig> ClientEmbedReport(EmbedReportRequest embedReportRequest)
         {
@@ -185,7 +182,7 @@ namespace PowerBIService.Services.Implementation
         /// <summary>
         /// Embeding Report with Changing parameters
         /// </summary>
-        /// <param name="embedReportRequest"></param>
+        /// <param name="embedReportRequestt"></param>
         /// <returns></returns>
         /// <exception cref="ValidationException"></exception>
         private async Task<EmbedConfig> EmbedReport(EmbedReportRequest embedReportRequest)

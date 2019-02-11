@@ -9,7 +9,7 @@ namespace PowerBIService.Services.Interfaces
         /// <summary>
         /// Embed Report
         /// </summary>
-        /// <param name="embedReportRequest"></param>
+        /// <param name="embedReportRequestt"></param>
         /// <returns></returns>
         Task<EmbedConfig> ClientEmbedReport(EmbedReportRequest embedReportRequest);
         
