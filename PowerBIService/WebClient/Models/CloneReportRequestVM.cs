@@ -1,4 +1,4 @@
-namespace WebClient.Models
+namespace WebClientDemo.Models
 {
     public class CloneReportRequestVM
     {

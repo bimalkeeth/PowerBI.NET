@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using PowerBIService.Common;
-using WebClient.Models;
+using WebClientDemo.Models;
 using WebGrease.Css.Extensions;
 
-namespace WebClient.Controllers
+namespace WebClientDemo.Controllers
 {
     public class HomeController : Controller
     {

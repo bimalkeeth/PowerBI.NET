@@ -1,4 +1,4 @@
-namespace WebClient.Areas.HelpPage.ModelDescriptions
+namespace WebClientDemo.Areas.HelpPage.ModelDescriptions
 {
     public class SimpleTypeModelDescription : ModelDescription
     {

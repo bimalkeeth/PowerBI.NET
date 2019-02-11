@@ -8,10 +8,10 @@ using System.Web.Http;
 using PowerBIService.Common;
 using PowerBIService.Services.Implementation;
 using ServiceCommon.Contract;
-using WebClient.Models;
+using WebClientDemo.Models;
 using WebGrease.Css.Extensions;
 
-namespace WebClient.Controllers
+namespace WebClientDemo.Controllers
 {
     public class ValuesController : ApiController
     {

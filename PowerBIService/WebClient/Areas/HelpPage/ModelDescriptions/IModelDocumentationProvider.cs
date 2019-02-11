@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace WebClient.Areas.HelpPage.ModelDescriptions
+namespace WebClientDemo.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace WebClient.Areas.HelpPage.ModelDescriptions
+namespace WebClientDemo.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

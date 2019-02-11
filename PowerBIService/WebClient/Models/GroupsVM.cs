@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace WebClient.Models
+namespace WebClientDemo.Models
 {
     public class GroupsVM
     {

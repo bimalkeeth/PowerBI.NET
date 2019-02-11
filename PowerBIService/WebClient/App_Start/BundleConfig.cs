@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WebClient
+namespace WebClientDemo
 {
     public class BundleConfig
     {
@@ -23,7 +23,7 @@ namespace WebClient
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             
-            bundles.Add(new ScriptBundle("~/bundles/poerbifiles").Include(
+            bundles.Add(new ScriptBundle("~/bundles/powerbifiles").Include(
                 "~/Scripts/powerbi.js","~/Scripts/PowerReport.js"));
         }
     }
