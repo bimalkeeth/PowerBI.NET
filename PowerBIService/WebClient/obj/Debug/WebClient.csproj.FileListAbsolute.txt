@@ -141,6 +141,7 @@ D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\Newtonsof
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\PowerBIService.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\ServiceCommon.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Diagnostics.DiagnosticSource.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Net.Http.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Net.Http.Formatting.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Web.Helpers.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Web.Http.dll
@@ -160,6 +161,7 @@ D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\PowerBISe
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\PowerBIService.dll.config
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\ServiceCommon.pdb
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\ServiceCommon.dll.config
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\Newtonsoft.Json.pdb
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\Newtonsoft.Json.xml
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Net.Http.Formatting.xml
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Web.Helpers.xml
