@@ -22,6 +22,9 @@ namespace WebClient
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/poerbifiles").Include(
+                "~/Scripts/powerbi.js","~/Scripts/PowerReport.js"));
         }
     }
 }
