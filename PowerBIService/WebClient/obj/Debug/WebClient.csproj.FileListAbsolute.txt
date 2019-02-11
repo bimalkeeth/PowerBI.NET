@@ -185,3 +185,14 @@ D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\obj\Debug\Web
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\obj\Debug\WebClient.csproj.CopyComplete
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\obj\Debug\WebClient.dll
 D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\obj\Debug\WebClient.pdb
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Data.Common.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Diagnostics.StackTrace.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Diagnostics.Tracing.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Globalization.Extensions.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.IO.Compression.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Net.Sockets.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Runtime.Serialization.Primitives.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Security.Cryptography.Algorithms.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Security.SecureString.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Threading.Overlapped.dll
+D:\Assetics\PowerBI\DemoPower\PowerBI.NET\PowerBIService\WebClient\bin\System.Xml.XPath.XDocument.dll
