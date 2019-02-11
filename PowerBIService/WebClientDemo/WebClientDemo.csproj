@@ -199,6 +199,8 @@
     <Compile Include="Models\CloneReportRequestVM.cs" />
     <Compile Include="Models\CloneReportResponseVM.cs" />
     <Compile Include="Models\CloneReportVM.cs" />
+    <Compile Include="Models\EmbededReporParamVM.cs" />
+    <Compile Include="Models\EmbedReportRequestVM.cs" />
     <Compile Include="Models\GroupsVM.cs" />
     <Compile Include="Models\PowerReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

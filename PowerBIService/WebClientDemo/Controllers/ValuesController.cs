@@ -79,6 +79,12 @@ namespace WebClientDemo.Controllers
             });
             return responseList.ToArray();
         }
+        [HttpPost]
+        [Route("api/values/EmbedReport", Name = "EmbedReport")]
+        public async Task<EmbedConfig> EmbedReport(EmbedReportRequestVM embedReportRequest)
+        {
+            return new EmbedConfig();
+        }
 
     }
 }

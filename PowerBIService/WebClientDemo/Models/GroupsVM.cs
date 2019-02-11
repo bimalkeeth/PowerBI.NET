@@ -6,5 +6,7 @@ namespace WebClientDemo.Models
     {
         public SelectListItem[] GroupFromList { get; set; }
         public SelectListItem[] GroupToList { get; set; }
+
+        public SelectListItem[] GroupEmebdList { get; set; }
     }
 }

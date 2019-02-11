@@ -86,12 +86,36 @@ $(function (PowerReport, $) {
             });
     };
 
-
-
-
     PowerReport.EmbedReport=function(){
 
+        var parentWorkSpaceName=$("#GroupEmebdList option:selected").text();
+        var childWorkSpace=$("#GroupToList option:selected").text();
 
+        var reports=[];
+        reports.push({ ParentReportName:$("#fromReportsEmbed option:selected").text(),CloneReportName:$("#cloneReportName").val(),WebApiEndPoint:$("#webApiUrl").val() })
+
+        var CloneReportRequestVM={
+
+            ParentWorkSpace:parentWorkSpaceName,
+            ClientWorkSpace:childWorkSpace,
+            CloneReports:reports
+
+        };
+        $.ajax({
+            url: PowerReport.stringFormat(Url.EmbedReportsUrl),
+            data: JSON.stringify(CloneReportRequestVM),
+            type: 'POST',
+            contentType: "application/json"
+        })
+            .done(function (data) {
+
+                $.each(data, function(key, value) {
+                    $("#successReport").val('ParentReport:'+ value.ParentReportName + '  Client Report:'+ value.CloneReportName + '  Success:'+ value.Success);
+                });
+            })
+            .fail(function (error) {
+
+            });
     }
     
 }(window.PowerReport = window.PowerReport || {}, jQuery));

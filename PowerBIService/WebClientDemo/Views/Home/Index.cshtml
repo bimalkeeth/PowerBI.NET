@@ -66,7 +66,7 @@
                 From Workspace
             </div>
             <div class="col-lg-4">
-                @Html.DropDownListFor(model => model.GroupFromList, @Model.GroupFromList, new {@class = "form-control btn btn-default dropdown-toggle", @onchange = "PowerReport.LoadEmbedReportForWorkSpace(this.value)"})
+                @Html.DropDownListFor(model => model.GroupEmebdList, @Model.GroupEmebdList, new {@class = "form-control btn btn-default dropdown-toggle", @onchange = "PowerReport.LoadEmbedReportForWorkSpace(this.value)"})
             </div>
             <div class="col-lg-2">
                 From Report
@@ -87,9 +87,9 @@
 <script type="text/javascript">
     PowerReport.init({
         Urls: {
-            GetGroupReportsUrl: decodeURIComponent(
-                '@Url.RouteUrl("WorkspaceAllReports", new {httproute = "", groupId = "{0}"})'),
-            CloneReportsUrl: decodeURIComponent('@Url.RouteUrl("CloneReport", new {httproute = ""})')
+            GetGroupReportsUrl: decodeURIComponent('@Url.RouteUrl("WorkspaceAllReports", new {httproute = "", groupId = "{0}"})'),
+            CloneReportsUrl: decodeURIComponent('@Url.RouteUrl("CloneReport", new {httproute = ""})'),
+            EmbedReportsUrl: decodeURIComponent('@Url.RouteUrl("EmbedReport", new {httproute = ""})')
         }
     });
 </script>

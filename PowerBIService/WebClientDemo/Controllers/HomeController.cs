@@ -38,7 +38,7 @@ namespace WebClientDemo.Controllers
             {
                 list.Add(new SelectListItem { Value = s.Id, Text = s.Name });
             });
-            var dataVm = new GroupsVM { GroupFromList = list.ToArray(), GroupToList = list.ToArray() };
+            var dataVm = new GroupsVM { GroupFromList = list.ToArray(), GroupToList = list.ToArray(),GroupEmebdList=list.ToArray() };
             return View(dataVm);
         }
     }
