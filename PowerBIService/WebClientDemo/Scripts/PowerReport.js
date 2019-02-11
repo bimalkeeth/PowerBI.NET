@@ -88,22 +88,23 @@ $(function (PowerReport, $) {
 
     PowerReport.EmbedReport=function(){
 
-        var parentWorkSpaceName=$("#GroupEmebdList option:selected").text();
-        var childWorkSpace=$("#GroupToList option:selected").text();
+        var workSpaceName=$("#GroupEmebdList option:selected").text();
+        var reportName=$("#cloneReportName").val();
+        var embedReportUrl=$("#webApiUrl").val();
+        var parameters=[];
 
-        var reports=[];
-        reports.push({ ParentReportName:$("#fromReportsEmbed option:selected").text(),CloneReportName:$("#cloneReportName").val(),WebApiEndPoint:$("#webApiUrl").val() })
+        var EmbedReportRequestVM={
 
-        var CloneReportRequestVM={
-
-            ParentWorkSpace:parentWorkSpaceName,
-            ClientWorkSpace:childWorkSpace,
-            CloneReports:reports
-
+            ReportName:reportName,
+            WorkSpaceName:workSpaceName,
+            EmbedReportUrl:embedReportUrl,
+            ParaMeters:parameters,
+            EmbedUserName:'',
+            EmbedRoles:''
         };
         $.ajax({
             url: PowerReport.stringFormat(Url.EmbedReportsUrl),
-            data: JSON.stringify(CloneReportRequestVM),
+            data: JSON.stringify(EmbedReportRequestVM),
             type: 'POST',
             contentType: "application/json"
         })
