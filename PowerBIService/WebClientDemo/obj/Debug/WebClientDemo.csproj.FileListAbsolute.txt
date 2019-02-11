@@ -1,3 +1,5 @@
+C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.csprojAssemblyReference.cache
+C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.csproj.CoreCompileInputs.cache
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\ApplicationInsights.config
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\WebClientDemo.dll.config
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\WebClientDemo.dll
@@ -124,8 +126,6 @@ C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\System
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\Antlr3.Runtime.pdb
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.xml
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.xml
-C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.csprojAssemblyReference.cache
-C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.csproj.CoreCompileInputs.cache
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.csproj.CopyComplete
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.dll
 C:\Users\bimal\RiderProjects\PowerBI.NET\PowerBIService\WebClientDemo\obj\Debug\WebClientDemo.pdb

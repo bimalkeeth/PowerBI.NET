@@ -48,8 +48,12 @@ namespace WebClientDemo.Controllers
         }
         [HttpPost]
         [Route("api/values/CloneReport", Name = "CloneReport")]
-        public IEnumerable<CloneReportResponseVM> CloneReport(CloneReportRequestVM cloneReport)
+        public async Task<IEnumerable<CloneReportResponseVM>> CloneReport(CloneReportRequestVM cloneReport)
         {
+
+            var d = new EmbedService();
+           var res=  await d.CloneReport("", "");
+
             var cloneReportRequest = new CloneReportRequest
             {
                 Credential = Credential,

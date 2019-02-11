@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -73,6 +74,7 @@
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Base\PowerServiceBase.cs" />
+    <Compile Include="Services\Implementation\EmbedService.cs" />
     <Compile Include="Services\Implementation\PowerService.cs" />
     <Compile Include="Services\Interfaces\IPowerService.cs" />
   </ItemGroup>

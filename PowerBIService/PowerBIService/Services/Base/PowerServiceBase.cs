@@ -98,7 +98,7 @@ namespace PowerBIService.Services.Base
             var displayNameQueryParameter = (!string.IsNullOrEmpty(datasetDisplayName))
                 ? FormattableString.Invariant($"?datasetDisplayName={Uri.EscapeDataString(datasetDisplayName)}")
                 : string.Empty;
-            string postImportEndpoint = FormattableString.Invariant($"https://api.powerbi.com/v2.0/myorg/groups/{workspaceId}/imports{displayNameQueryParameter}");
+            string postImportEndpoint = FormattableString.Invariant($"https://api.powerbi.com/v1.0/myorg/groups/{workspaceId}/imports{displayNameQueryParameter}");
 
             var contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data") {Name = "file0"};
             HttpContent fileStreamContent = new StreamContent(content);
