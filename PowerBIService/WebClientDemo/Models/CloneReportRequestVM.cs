@@ -2,8 +2,8 @@ namespace WebClientDemo.Models
 {
     public class CloneReportRequestVM
     {
-        public string ParentWorkSpace { get; set; }
-        public string ClientWorkSpace { get; set; }
+        public string ParentWorkSpaceId { get; set; }
+        public string ClientWorkSpaceId { get; set; }
         public CloneReportVM[] CloneReports { get; set; }
     }
 }

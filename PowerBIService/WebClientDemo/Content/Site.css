@@ -23,3 +23,21 @@ textarea {
 .padtoprow {
     padding-top: 5px !important;
 }
+.cardHeight{
+    height: 450px!important;
+}
+
+.powerbi-frame {
+    margin: 0 0 3rem 0;
+    height: 600px!important;
+}
+
+.powerbi-frame--dotted {
+    border: 2px dashed #cecece!important;
+}
+
+iframe {
+    height: 350px!important;
+    border-width:thin;
+    border-style: none;
+}

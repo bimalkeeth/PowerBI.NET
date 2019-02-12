@@ -39,15 +39,15 @@ namespace PowerBIService.Services.Implementation
             {
                 throw new ValidationException(PowerResource.ValidationError_ReportsMissingForClone);
             }
-            if (string.IsNullOrWhiteSpace(cloneReportRequest.ParentWorkSpace))
+            if (string.IsNullOrWhiteSpace(cloneReportRequest.ParentWorkSpaceId))
             {
                 throw new ValidationException(PowerResource.ValidationError_ParentWorkSpaceMissingForClone);
             }
-            if (string.IsNullOrWhiteSpace(cloneReportRequest.ClientWorkSpace))
+            if (string.IsNullOrWhiteSpace(cloneReportRequest.ClientWorkSpaceId))
             {
                 throw new ValidationException(PowerResource.ValidationError_ClientWorkSpaceMissingForClone);
             }
-            if (cloneReportRequest.CloneReports.FirstOrDefault(s => string.IsNullOrWhiteSpace(s.ParentReportName))!=null)
+            if (cloneReportRequest.CloneReports.FirstOrDefault(s => string.IsNullOrWhiteSpace(s.ParentReportId))!=null)
             {
                 throw new ValidationException(PowerResource.ValidationError_ParentReportsNameMissingForClone);
             }
@@ -69,13 +69,13 @@ namespace PowerBIService.Services.Implementation
                 {
 
                     var groups = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
-                    var group = groups.Body.Value.FirstOrDefault(s => s.Name == cloneReportRequest.ParentWorkSpace);
+                    var group = groups.Body.Value.FirstOrDefault(s => s.Id == cloneReportRequest.ParentWorkSpaceId);
                     if (group == null)
                     {
                         throw new ValidationException(PowerResource.ValidationErrorParentGroupNotFoundError);
                     }
 
-                    var clientGroup = groups.Body.Value.FirstOrDefault(s => s.Name == cloneReportRequest.ClientWorkSpace);
+                    var clientGroup = groups.Body.Value.FirstOrDefault(s => s.Id == cloneReportRequest.ClientWorkSpaceId);
                     if (clientGroup == null)
                     {
                         throw new ValidationException(PowerResource.ValidationErrorClientGroupNotFoundError);
@@ -86,7 +86,7 @@ namespace PowerBIService.Services.Implementation
                     {
                         foreach (var cloneReport in cloneReportRequest.CloneReports)
                         {
-                           var parentReport= reports.Value.FirstOrDefault(s => s.Name == cloneReport.ParentReportName);
+                           var parentReport= reports.Value.FirstOrDefault(s => s.Id == cloneReport.ParentReportId);
                            if (parentReport == null) continue;
 
                                var export= await pClient.Reports.ExportReportInGroupAsync(@group.Id, parentReport.Id);
@@ -106,6 +106,7 @@ namespace PowerBIService.Services.Implementation
                                        var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, impDataset.Id);
                                    }
                                    var clientGroupReports= await pClient.Reports.GetReportsInGroupAsync(clientGroup.Id);
+                                   
                                    foreach (var impReport in import.Reports)
                                    {
                                        var cloneResultReport= clientGroupReports.Value.FirstOrDefault(s =>s.Id == impReport.Id);
@@ -114,7 +115,9 @@ namespace PowerBIService.Services.Implementation
                                    responseList.Add(new CloneReportResponse
                                    {
                                        CloneReportName = cloneReport.CloneReportName,
-                                       ParentReportName = cloneReport.ParentReportName,
+                                       CloneReportId = import.Reports.FirstOrDefault()?.Id,
+                                       ParentReportId = cloneReport.ParentReportId,
+                                       ParentReportName = parentReport.Name,
                                        Success = true
                                    });
                                }
@@ -132,22 +135,30 @@ namespace PowerBIService.Services.Implementation
 
         private async Task<bool> UpdateAndRefreshDataSet(PowerBIClient pClient,EmbedReportRequest embedReportRequest, string groupId,string reportId,string dataSetId)
         {
-            
-            var dataset= await pClient.Datasets.GetDatasetByIdInGroupWithHttpMessagesAsync(groupId, dataSetId);
-            var data= await pClient.Datasets.GetParametersInGroupWithHttpMessagesAsync(groupId,  dataSetId);
-
-
-            var ParamList = new List<UpdateDatasetParameterDetails>();
-            ParamList.Add(new UpdateDatasetParameterDetails
+            try
             {
-                Name = "ConnectionUrl",
-                NewValue = embedReportRequest.EmbedReportUrl
-            });
+                var dataset= await pClient.Datasets.GetDatasetByIdInGroupWithHttpMessagesAsync(groupId, dataSetId);
+                var data= await pClient.Datasets.GetParametersInGroupWithHttpMessagesAsync(groupId,  dataSetId);
+
+
+                var ParamList = new List<UpdateDatasetParameterDetails>();
+                ParamList.Add(new UpdateDatasetParameterDetails
+                {
+                    Name = "ConnectionUrl",
+                    NewValue = embedReportRequest.EmbedReportUrl
+                });
             
-            var response= await pClient.Datasets.UpdateParametersInGroupWithHttpMessagesAsync(groupId, dataSetId,new UpdateDatasetParametersRequest{UpdateDetails =ParamList});
-            await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(groupId, dataSetId);
-            await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
-            return true;
+                var response= await pClient.Datasets.UpdateParametersInGroupWithHttpMessagesAsync(groupId, dataSetId,new UpdateDatasetParametersRequest{UpdateDetails =ParamList});
+                //await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(groupId, dataSetId);
+                await pClient.Reports.RebindReportInGroupWithHttpMessagesAsync(groupId,reportId, new RebindReportRequest{DatasetId =dataset.Body.Id});
+                return true;
+
+
+            }
+            catch (Exception exp)
+            {
+                return false;
+            }
         }
         /// <summary>
         /// Embeding Report to User request
@@ -161,12 +172,12 @@ namespace PowerBIService.Services.Implementation
                 throw new ValidationException(PowerResource.EmbedReportUrlIsMissingError);
             }
 
-            if (string.IsNullOrWhiteSpace(embedReportRequest.WorkSpaceName))
+            if (string.IsNullOrWhiteSpace(embedReportRequest.WorkSpaceId))
             {
                 throw new ValidationException(PowerResource.ValidationError_EmbedWorkSpaceMissingForClone);
             }
             
-            if (string.IsNullOrWhiteSpace(embedReportRequest.ReportName))
+            if (string.IsNullOrWhiteSpace(embedReportRequest.ReportId))
             {
                 throw new ValidationException(PowerResource.ValidationError_EmbedReportsMissingError);
             }
@@ -196,7 +207,7 @@ namespace PowerBIService.Services.Implementation
                 {
 
                     var groups = await pClient.Groups.GetGroupsWithHttpMessagesAsync();
-                    var group = groups.Body.Value.FirstOrDefault(s => s.Name == embedReportRequest.WorkSpaceName);
+                    var group = groups.Body.Value.FirstOrDefault(s => s.Id == embedReportRequest.WorkSpaceId);
                     if (group == null)
                     {
                         throw new ValidationException(PowerResource.ValidationErrorParentGroupNotFoundError);
@@ -208,13 +219,15 @@ namespace PowerBIService.Services.Implementation
                         return config;
                     }
 
-                    var embeddingReport=reports.Value.FirstOrDefault(s => s.Name == embedReportRequest.ReportName);
-                    if (embeddingReport != null)
+                    var embeddingReport=reports.Value.FirstOrDefault(s => s.Id == embedReportRequest.ReportId);
+                    if (embeddingReport == null)
                     {
                         config.ErrorMessage = PowerResource.EmbedReportNotFoundError;
                     }
 
-                    var dataSet=await pClient.Datasets.GetDatasetByIdInGroupAsync(group.Id, embeddingReport.Id);
+                    var dataSet=await pClient.Datasets.GetDatasetByIdInGroupAsync(group.Id, embeddingReport.DatasetId);
+                    
+                    
                     config.IsEffectiveIdentityRequired = dataSet.IsEffectiveIdentityRequired;
                     config.IsEffectiveIdentityRolesRequired = dataSet.IsEffectiveIdentityRolesRequired;
 

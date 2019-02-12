@@ -4,8 +4,8 @@ namespace ServiceCommon.Contract
 {
     public class EmbedReportRequest
     {
-        public string ReportName { get; set; }
-        public string WorkSpaceName { get; set; }
+        public string ReportId { get; set; }
+        public string WorkSpaceId { get; set; }
         public UserData Credential { get; set; }
         public string EmbedReportUrl { get; set; }
 

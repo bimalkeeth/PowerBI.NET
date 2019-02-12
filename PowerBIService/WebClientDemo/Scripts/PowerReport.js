@@ -24,16 +24,22 @@ $(function (PowerReport, $) {
     };
     PowerReport.CloneReport=function(){
 
-            var parentWorkSpaceName=$("#GroupFromList option:selected").text();  
-            var childWorkSpace=$("#GroupToList option:selected").text();
-    
+            var parentWorkSpaceName=$("#GroupFromList option:selected").val();  
+            var childWorkSpace=$("#GroupToList option:selected").val();
+                         
+            if($("#cloneReportName").val()==''){
+                
+                alert('Client report is empty');
+                return;
+            }
+            
             var reports=[];
-            reports.push({ ParentReportName:$("#fromReports option:selected").text(),CloneReportName:$("#cloneReportName").val(),WebApiEndPoint:$("#webApiUrl").val() })
+            reports.push({ ParentReportId:$("#fromReports option:selected").val(),CloneReportName:$("#cloneReportName").val(),WebApiEndPoint:$("#webApiUrl").val() })
                   
             var CloneReportRequestVM={
-    
-                ParentWorkSpace:parentWorkSpaceName,
-                ClientWorkSpace:childWorkSpace,
+
+                ParentWorkSpaceId:parentWorkSpaceName,
+                ClientWorkSpaceId:childWorkSpace,
                 CloneReports:reports
                 
             };         
@@ -88,15 +94,15 @@ $(function (PowerReport, $) {
 
     PowerReport.EmbedReport=function(){
 
-        var workSpaceName=$("#GroupEmebdList option:selected").text();
-        var reportName=$("#cloneReportName").val();
+        var workSpaceId=$("#GroupEmebdList option:selected").val();
+        var reportId=$("#fromReportsEmbed option:selected").val();
         var embedReportUrl=$("#webApiUrl").val();
         var parameters=[];
 
         var EmbedReportRequestVM={
 
-            ReportName:reportName,
-            WorkSpaceName:workSpaceName,
+            ReportId:reportId,
+            WorkSpaceId:workSpaceId,
             EmbedReportUrl:embedReportUrl,
             ParaMeters:parameters,
             EmbedUserName:'',
@@ -110,9 +116,29 @@ $(function (PowerReport, $) {
         })
             .done(function (data) {
 
-                $.each(data, function(key, value) {
-                    $("#successReport").val('ParentReport:'+ value.ParentReportName + '  Client Report:'+ value.CloneReportName + '  Success:'+ value.Success);
-                });
+                var accessToken = data.EmbedToken.token;
+                var embedUrl = data.EmbedUrl;
+                var embedReportId = data.Id;
+                var models = window['powerbi-client'].models;
+
+                var config = {
+                    type: 'report',
+                    tokenType: models.TokenType.Embed,
+                    accessToken: accessToken,
+                    embedUrl: embedUrl,
+                    id: embedReportId,
+                    pageView: "fitToWidth",
+                    permissions: models.Permissions.All,
+                    settings: {
+                        filterPaneEnabled: true,
+                        navContentPaneEnabled: true
+                    }
+                };
+
+                var reportContainer = $('#reportContainer')[0];
+                var report = powerbi.embed(reportContainer, config);
+                
+                
             })
             .fail(function (error) {
 

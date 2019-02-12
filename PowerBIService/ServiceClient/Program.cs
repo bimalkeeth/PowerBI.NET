@@ -17,7 +17,7 @@ namespace ServiceClient
                {
                    new CloneReport
                    {
-                       ParentReportName ="SepalReport2",
+                       ParentReportId = "SepalReport2",
                        CloneReportName = "NewCloneReport",
                        WebApiEndPoint = "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/d546eaee765268bf2f487608c537c05e22e4b221/iris.csv"
                    }
@@ -31,8 +31,8 @@ namespace ServiceClient
                     Password = "Scala@1234",
                     UserName = "bkaluarachchi@assetic.com"
                 },
-               ClientWorkSpace = "SepalCloner",
-               ParentWorkSpace = "My Workspace"
+               ClientWorkSpaceId = "SepalCloner",
+               ParentWorkSpaceId = "My Workspace"
                
             })).ConfigureAwait(false);
             dd.GetAwaiter().GetResult(); 

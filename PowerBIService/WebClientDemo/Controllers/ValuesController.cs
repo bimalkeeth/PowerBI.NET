@@ -57,13 +57,13 @@ namespace WebClientDemo.Controllers
             var cloneReportRequest = new CloneReportRequest
             {
                 Credential = Credential,
-                ClientWorkSpace = cloneReport.ClientWorkSpace,
-                ParentWorkSpace = cloneReport.ParentWorkSpace,
-                CloneReports = cloneReport.CloneReports.Select(w => new CloneReport { CloneReportName = w.CloneReportName, ParentReportName = w.ParentReportName, WebApiEndPoint = w.WebApiEndPoint }).ToArray()
+                ClientWorkSpaceId = cloneReport.ClientWorkSpaceId,
+                ParentWorkSpaceId = cloneReport.ParentWorkSpaceId,
+                CloneReports = cloneReport.CloneReports.Select(w => new CloneReport { CloneReportName = w.CloneReportName, ParentReportId = w.ParentReportId, WebApiEndPoint = w.WebApiEndPoint }).ToArray()
 
             };
-            var result = Task.Run(async () => await service.CloneReports(cloneReportRequest)).ConfigureAwait(false);
-            var responseData = result.GetAwaiter().GetResult();
+            var result =  await service.CloneReports(cloneReportRequest);
+            var responseData = result;
 
             var responseList = new List<CloneReportResponseVM>();
 
@@ -83,7 +83,20 @@ namespace WebClientDemo.Controllers
         [Route("api/values/EmbedReport", Name = "EmbedReport")]
         public async Task<EmbedConfig> EmbedReport(EmbedReportRequestVM embedReportRequest)
         {
-            return new EmbedConfig();
+            var embedRequest=new EmbedReportRequest
+            {
+                Credential = Credential,
+                EmbedRoles = embedReportRequest.EmbedRoles,
+                ReportId = embedReportRequest.ReportId,
+                EmbedUserName = embedReportRequest.EmbedUserName,
+                WorkSpaceId = embedReportRequest.WorkSpaceId,
+                EmbedReportUrl = embedReportRequest.EmbedReportUrl,
+                ParaMeters = embedReportRequest.ParaMeters.Select(s=> new EmbededReportDataSetParam{ParaType = s.ParaType,ParamName = s.ParamName,ParamValue = s.ParamValue}).ToArray()
+            };
+            var result =  await service.ClientEmbedReport(embedRequest);
+            var responseData = result;
+            
+            return responseData;
         }
 
     }
