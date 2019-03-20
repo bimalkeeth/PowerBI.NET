@@ -103,7 +103,7 @@ namespace PowerBIService.Services.Implementation
                                    }
                                    foreach (var impDataset in import.Datasets)
                                    {
-                                       var refresh=await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, impDataset.Id);
+                                       await pClient.Datasets.RefreshDatasetInGroupWithHttpMessagesAsync(clientGroup.Id, impDataset.Id);
                                    }
                                    var clientGroupReports= await pClient.Reports.GetReportsInGroupAsync(clientGroup.Id);
                                    
@@ -297,7 +297,7 @@ namespace PowerBIService.Services.Implementation
             return false;
         }
         #region Helper Methods
-        public async Task<NameValueContract[]> GetAllGroups(UserData credential)
+        public async Task<NameValueContract[]> GetAllGroups(UserCredentials credential)
         {
             UserCredential = credential;
             await AuthenticateAsync();

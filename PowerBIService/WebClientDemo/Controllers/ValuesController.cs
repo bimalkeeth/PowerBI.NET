@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using PowerBIService.Common;
@@ -10,17 +7,18 @@ using PowerBIService.Services.Implementation;
 using ServiceCommon.Contract;
 using WebClientDemo.Models;
 using WebGrease.Css.Extensions;
+using CloneReportRequest = ServiceCommon.Contract.CloneReportRequest;
 
 namespace WebClientDemo.Controllers
 {
     public class ValuesController : ApiController
     {
 
-        private UserData Credential;
+        private UserCredentials Credential;
         private PowerService service;
         public ValuesController()
         {
-            Credential = new UserData
+            Credential = new UserCredentials
             {
                 TenantId = "470cec91-5a0e-47c7-87a9-2fcaf82d5d90",
                 SecretId = "82(t[}]Ee+y&+GvT8[tjh+;U9[|x;",
@@ -50,10 +48,7 @@ namespace WebClientDemo.Controllers
         [Route("api/values/CloneReport", Name = "CloneReport")]
         public async Task<IEnumerable<CloneReportResponseVM>> CloneReport(CloneReportRequestVM cloneReport)
         {
-
-           //var d = new EmbedService();
-           //var res=  await d.CloneReport("", "");
-
+          
             var cloneReportRequest = new CloneReportRequest
             {
                 Credential = Credential,
@@ -93,10 +88,9 @@ namespace WebClientDemo.Controllers
                 EmbedReportUrl = embedReportRequest.EmbedReportUrl,
                 ParaMeters = embedReportRequest.ParaMeters.Select(s=> new EmbededReportDataSetParam{ParaType = s.ParaType,ParamName = s.ParamName,ParamValue = s.ParamValue}).ToArray()
             };
-            var result =  await service.ClientEmbedReport(embedRequest);
-            var responseData = result;
-            
-            return responseData;
+           var result =  await service.ClientEmbedReport(embedRequest);
+           var responseData = result;
+           return responseData;
         }
 
     }

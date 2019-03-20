@@ -32,7 +32,7 @@ namespace PowerBIService.Services.Interfaces
         /// </summary>
         /// <param name="credential"></param>
         /// <returns></returns>
-        Task<NameValueContract[]> GetAllGroups(UserData credential);
+        Task<NameValueContract[]> GetAllGroups(UserCredentials credential);
 
         /// <summary>
         /// Get Reports for the workspace

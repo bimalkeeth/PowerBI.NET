@@ -6,7 +6,7 @@ namespace ServiceCommon.Contract
     {
         public string ReportId { get; set; }
         public string WorkSpaceId { get; set; }
-        public UserData Credential { get; set; }
+        public UserCredentials Credential { get; set; }
         public string EmbedReportUrl { get; set; }
 
         public EmbededReportDataSetParam[] ParaMeters { get; set; }

@@ -19,7 +19,7 @@ namespace PowerBIService.Services.Base
     public abstract class PowerServiceBase
     {
         #region Base Variables
-        protected UserData UserCredential { get; set; }
+        protected UserCredentials UserCredential { get; set; }
         protected AuthenticationResult TokenResult { get; set; }
         protected TokenCredentials PTokenCredentials { get; set;}
         protected  EmbedConfig EmbedConfiguration { get; set; }=new EmbedConfig();

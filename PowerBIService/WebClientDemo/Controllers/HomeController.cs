@@ -12,11 +12,11 @@ namespace WebClientDemo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserData Credential;
+        private readonly UserCredentials Credential;
 
         public HomeController()
         {
-            Credential = new UserData
+            Credential = new UserCredentials
             {
                 TenantId = "470cec91-5a0e-47c7-87a9-2fcaf82d5d90",
                 SecretId = "82(t[}]Ee+y&+GvT8[tjh+;U9[|x;",

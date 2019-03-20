@@ -1,6 +1,6 @@
 namespace PowerBIService.Common
 {
-    public class UserData
+    public class UserCredentials
     {
         public string ParentWorkSpace { get; set; }
         public string ApplicationId { get; set; }
